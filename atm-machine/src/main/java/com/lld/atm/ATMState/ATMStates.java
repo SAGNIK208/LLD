@@ -1,0 +1,5 @@
+package com.lld.atm.ATMState;
+
+public enum ATMStates {
+    IDLE,AUTHENTICATING,READY,VERIFYING_BALANCE,WITHDRAWING,EXIT;
+}

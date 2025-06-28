@@ -7,5 +7,6 @@
   <modules>
     <!-- Add modules here as you create them -->
     <module>parking-lot</module>
+    <module>atm-machine</module>
   </modules>
 </project>
