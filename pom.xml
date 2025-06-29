@@ -9,5 +9,6 @@
     <module>parking-lot</module>
     <module>atm-machine</module>
     <module>e-commerce</module>
+    <module>stock-broker</module>
   </modules>
 </project>
