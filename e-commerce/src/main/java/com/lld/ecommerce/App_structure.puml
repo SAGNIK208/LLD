@@ -1,0 +1,330 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": false,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "None", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 5,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.lld.ecommerce.App",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+Account365965042[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Account</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   accountType: AccountType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   addresses: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AccountManagementSystem1737894237[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AccountManagementSystem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createAccount(accountType: AccountType, username: String, password: String, name: String, address: List&lt;String&gt;): Account</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+App537847305[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)App</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Cart1195214815[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Cart</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   account: Account [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   products: List&lt;Product&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ updateProduct(product: Product)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CartManagementSystem1737894237[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CartManagementSystem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   carts: Map&lt;String, Cart&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addProduct(account: Account, product: Product)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createCart(account: Account): Cart</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+FestiveStrategy24672487[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FestiveStrategy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ calculateAmount(cart: Cart): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Laptop501879760[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Laptop</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+OrderManagementSystem1737894237[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OrderManagementSystem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ placeOrder(cart: Cart, paymentStrategy: PaymentStrategy, address: String): Order</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Payment24672487[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Payment</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   paymentMethod: PaymentMethod [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   paymentStatus: PaymentStatus [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ updateStatus(paymentStatus: PaymentStatus)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PaymentManagementSystem1737894237[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PaymentManagementSystem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ pay(order: Order, paymentMethod: PaymentMethod): Payment</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PaymentStatus24672487[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(E)PaymentStatus</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   ACCEPTED: PaymentStatus [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   DECLINED: PaymentStatus [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   PROCESSING: PaymentStatus [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ valueOf(name: String): PaymentStatus</TD></TR>
+<TR><TD ALIGN="LEFT" >+ values(): PaymentStatus[]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#DCFBD5"
+];
+
+Product501879760[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Product</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   cost: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   productType: ProductType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   quantity: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   rating: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   seller: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ProductManagementSystem1737894237[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ProductManagementSystem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   products: List&lt;Product&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ search(productType: ProductType, rating: Integer): List&lt;Product&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ProductType501879760[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(E)ProductType</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   LAPTOPS: ProductType [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   SMARTPHONES: ProductType [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ valueOf(name: String): ProductType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ values(): ProductType[]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#DCFBD5"
+];
+
+ShipmentManagementSystem1737894237[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ShipmentManagementSystem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ expectedTimeOfDelivery(order: Order): Map&lt;String, LocalDateTime&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UPIPayment24672487[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UPIPayment</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ makePayment(amount: double): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+'edges    
+App537847305 -> AccountManagementSystem1737894237[label="main() -> createAccount()"];
+App537847305 -> OrderManagementSystem1737894237[label="main() -> placeOrder()"];
+App537847305 -> PaymentManagementSystem1737894237[label="main() -> pay()"];
+App537847305 -> ProductManagementSystem1737894237[label="main() -> search()"];
+App537847305 -> ShipmentManagementSystem1737894237[label="main() -> expectedTimeOfDelivery()"];
+Cart1195214815 -> Account365965042[label="account
+[0..1]"];
+Cart1195214815 -> Product501879760[label="products
+[0..*]"];
+CartManagementSystem1737894237 -> Cart1195214815[label="carts
+[0..*]"];
+OrderManagementSystem1737894237 -> FestiveStrategy24672487[arrowhead=none];
+Payment24672487 -> PaymentStatus24672487[label="paymentStatus
+[0..1]"];
+PaymentManagementSystem1737894237 -> UPIPayment24672487[arrowhead=none];
+Product501879760 -> Laptop501879760[arrowhead=none, arrowtail=empty, dir=both];
+Product501879760 -> ProductType501879760[label="productType
+[0..1]"];
+ProductManagementSystem1737894237 -> Product501879760[label="products
+[0..*]"];
+    
+}
+@enduml

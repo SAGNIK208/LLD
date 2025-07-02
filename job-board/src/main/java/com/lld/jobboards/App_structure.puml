@@ -1,0 +1,206 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "None", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.lld.jobboards.App",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+Account1874472101[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Account</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   accountType: AccountType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+App563558419[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)App</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CompanyAccount1874472101[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CompanyAccount</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onEventUpdate(jobApplicationEvent: JobApplicationEvent)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Experience1874472101[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Experience</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   company: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   responsibilities: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   role: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   years: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+JobManagementService520343591[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)JobManagementService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   companyAccounts: List&lt;CompanyAccount&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   jobApplications: Map&lt;String, List&lt;Profile&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   postedJobs: Map&lt;String, List&lt;JobPosting&gt;&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ applyForJob(jobId: String, profile: Profile)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createJobPosting(company: CompanyAccount, jobPosting: JobPosting)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ notifyObservers(jobId: String, profile: Profile)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ registerObservers(companyAccount: CompanyAccount)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ searchJobs(companyName: String): List&lt;JobPosting&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ unregisterObservers(companyAccount: CompanyAccount)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+JobPosting1874472101[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)JobPosting</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   companyName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   location: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   postingDate: LocalDate [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requirements: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   role: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   yearsOfExperiencedRequired: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Profile1874472101[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Profile</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   experiences: List&lt;Experience&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   skills: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userId: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+'edges    
+Account1874472101 -> CompanyAccount1874472101[arrowhead=none, arrowtail=empty, dir=both];
+JobManagementService520343591 -> CompanyAccount1874472101[label="companyAccounts
+[0..*]"];
+JobManagementService520343591 -> JobPosting1874472101[label="postedJobs
+[0..*]"];
+JobManagementService520343591 -> Profile1874472101[label="jobApplications
+[0..*]"];
+Profile1874472101 -> Experience1874472101[label="experiences
+[0..*]"];
+    
+}
+@enduml

@@ -70,7 +70,7 @@ config=StructureConfiguration;
     "showPackageLevels": 5,
     "showDetailedClassStructure": true
   },
-  "rootClass": "com.lld.parkinglot.App",
+  "rootClass": "com.lld.hotelbooking.App",
   "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
 }
 diagram meta data end '/
@@ -83,10 +83,11 @@ digraph g {
     
 
 'nodes 
-App1409552[
+App807959620[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)App</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >+ addDays(date: Date, days: int): Date</TD></TR>
 <TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
 </TABLE>>
 	style=filled
@@ -95,48 +96,16 @@ App1409552[
 	fillcolor="#FFFFFF"
 ];
 
-BasicPaymentStrategy1089443864[
+Hotel985259812[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)BasicPaymentStrategy</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ calculateAmount(duration: long, vehicleType: VehicleType, parkingSpotType: ParkingSpotType): double</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-ParkingFloor1095964262[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)ParkingFloor</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >-   ID: int [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   parkingSpotList: List&lt;ParkingSpot&gt; [0..*]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ findFreeParkingSpot(spotType: ParkingSpotType): ParkingSpot</TD></TR>
-<TR><TD ALIGN="LEFT" >+ isFull(spotType: ParkingSpotType): boolean</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-ParkingLot1409552[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)ParkingLot</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)Hotel</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   ParkingFloorList: List&lt;ParkingFloor&gt; [0..*]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   ticketManager: TicketManager [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   location: Location [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   rooms: Map&lt;String, Room&gt; [0..*]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ addNewFloor(parkingFloor: ParkingFloor)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ allocateSpot(parkingSpotType: ParkingSpotType): ParkingSpot</TD></TR>
-<TR><TD ALIGN="LEFT" >+ entry(vehicle: Vehicle, type: ParkingSpotType, paymentStrategy: PaymentStrategy): Ticket</TD></TR>
-<TR><TD ALIGN="LEFT" >+ exit(ticket: Ticket, paymentMethod: PaymentMethod): boolean</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getInstance(ParkingFloorList: List&lt;ParkingFloor&gt;, ticketManager: TicketManager): ParkingLot</TD></TR>
-<TR><TD ALIGN="LEFT" >+ isFull(parkingSpotType: ParkingSpotType): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateRooms(id: String, room: Room)</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -144,75 +113,95 @@ ParkingLot1409552[
 	fillcolor="#FFFFFF"
 ];
 
-ParkingSpot1095964262[
+HotelManagementSystem56357456[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)ParkingSpot</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)HotelManagementSystem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   hotels: Map&lt;String, Hotel&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   reservationSystem: ReservationSystem [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addHotel(hotel: Hotel)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ bookRooms(hotelId: String, roomIds: List&lt;String&gt;, startDate: Date, endDate: Date, user: User)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ reservedBookings()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ roomsAvailable(hotelId: String, startDate: Date, endDate: Date): List&lt;Room&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Location985259812[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Location</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   city: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   country: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Reservation985259812[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Reservation</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   endDate: Date [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   roomId: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   startDate: Date [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ exists(startDate: Date, endDate: Date): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ exists(roomId: String, startDate: Date, endDate: Date): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ReservationLockProvider56357456[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ReservationLockProvider</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   lockedReservationList: Map&lt;String, List&lt;ReservationLock&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timeout: long [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getLockedReservations(hotelId: String): List&lt;Reservation&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ lockReservation(hotelId: String, roomIds: List&lt;String&gt;, startDate: Date, endDate: Date, user: User)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ unlockReservation(hotelId: String, roomIds: List&lt;String&gt;, startDate: Date, endDate: Date, user: User)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ReservationSystem56357456[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ReservationSystem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   provider: IReservationLockProvider [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   reservedBookings: Map&lt;String, List&lt;Reservation&gt;&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ bookRooms(hotelId: String, roomIds: List&lt;String&gt;, startDate: Date, endDate: Date, user: User)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ printReservedBookings()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ roomsBooked(hotelId: String, startDate: Date, endDate: Date): List&lt;String&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Room985259812[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Room</TD></TR>
 <HR/>
 <TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   currentVehicle: Vehicle [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   floorNo: int [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   isOccupied: boolean [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   type: ParkingSpotType [0..1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ occupy(vehicle: Vehicle)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ unOccupy()</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-PaymentProcessor1089443864[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)PaymentProcessor</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ processPayment(ticket: Ticket, paymentMethod: PaymentMethod): boolean</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-Ticket1853558550[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)Ticket</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   entryTime: long [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   exitTime: long [1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   parkingSpot: ParkingSpot [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   paymentStrategy: PaymentStrategy [0..1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ updateExitTime()</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-TicketManager1853558550[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)TicketManager</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >#   activeParkingList: Map&lt;String, ParkingSpot&gt; [0..*]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ closeTicket(ticketId: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >+ provideTicket(parkingSpot: ParkingSpot, paymentStrategy: PaymentStrategy): Ticket</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-UPIPayment1089443864[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)UPIPayment</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ pay(amount: double): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >-   hotelId: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   roomType: RoomType [0..1]</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -221,21 +210,17 @@ UPIPayment1089443864[
 ];
 
 'edges    
-ParkingFloor1095964262 -> ParkingSpot1095964262[label="parkingSpotList
-[0..*]"];
-ParkingLot1409552 -> ParkingFloor1095964262[label="ParkingFloorList
-[0..*]"];
-ParkingLot1409552 -> ParkingSpot1095964262[label="entry() -> occupy()"];
-ParkingLot1409552 -> PaymentProcessor1089443864[label="exit() -> processPayment()"];
-ParkingLot1409552 -> Ticket1853558550[label="exit() -> updateExitTime()"];
-ParkingLot1409552 -> TicketManager1853558550[label="ticketManager
+Hotel985259812 -> Location985259812[label="location
 [0..1]"];
-PaymentProcessor1089443864 -> UPIPayment1089443864[arrowhead=none];
-Ticket1853558550 -> BasicPaymentStrategy1089443864[arrowhead=none];
-Ticket1853558550 -> ParkingSpot1095964262[label="parkingSpot
-[0..1]"];
-TicketManager1853558550 -> ParkingSpot1095964262[label="activeParkingList
+Hotel985259812 -> Room985259812[label="rooms
 [0..*]"];
+HotelManagementSystem56357456 -> Hotel985259812[label="hotels
+[0..*]"];
+HotelManagementSystem56357456 -> ReservationSystem56357456[label="reservationSystem
+[0..1]"];
+ReservationSystem56357456 -> Reservation985259812[label="reservedBookings
+[0..*]"];
+ReservationSystem56357456 -> ReservationLockProvider56357456[arrowhead=none];
     
 }
 @enduml

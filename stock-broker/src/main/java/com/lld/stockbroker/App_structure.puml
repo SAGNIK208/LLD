@@ -1,0 +1,334 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": false,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "None", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 5,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.lld.stockbroker.App",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+Account942317033[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Account</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   accountType: AccountType [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   cashBalance: BigDecimal [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AccountManagementService9687444[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AccountManagementService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   accountCache: Map&lt;String, Account&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   marketDataService: MarketDataService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ createAccount(accountType: AccountType): Account</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAccountById(id: String): Account</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateAccount(order: Order)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+App933144568[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)App</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LimitOrderMatchStrategy1277344718[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LimitOrderMatchStrategy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ tryMatch(order: Order, currentMarketPrice: BigDecimal): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MarketDataService9687444[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MarketDataService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   observers: List&lt;MarketDataObserver&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stockCache: Map&lt;String, Stock&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addStock(stock: Stock)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStockBySymbol(stockSymbol: String): Stock</TD></TR>
+<TR><TD ALIGN="LEFT" >+ notifyObservers(stockPriceUpdateEvent: StockPriceUpdateEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ registerObserver(observer: MarketDataObserver)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ unregisterObserver(observer: MarketDataObserver)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateStockCache(stockSymbol: String, stock: Stock)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MarketOrderMatchStrategy1277344718[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MarketOrderMatchStrategy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ tryMatch(order: Order, currentMarketPrice: BigDecimal): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+OrderManagementService9687444[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OrderManagementService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   accountManagementService: AccountManagementService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   marketDataService: MarketDataService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   portfolioManagementService: PortfolioManagementService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tradeExecutionService: TradeExecutionService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ placeOrder(order: Order): Order</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+OrderType1272730040[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(E)OrderType</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   LIMIT_ORDER: OrderType [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   MARKET_ORDER: OrderType [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ valueOf(name: String): OrderType</TD></TR>
+<TR><TD ALIGN="LEFT" >+ values(): OrderType[]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#DCFBD5"
+];
+
+Portfolio1276494208[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Portfolio</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   accountId: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stockPositions: Map&lt;String, StockPosition&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ currentValue(marketDataService: MarketDataService): BigDecimal</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateStockPosition(symbol: String, stockPosition: StockPosition)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PortfolioManagementService9687444[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PortfolioManagementService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   marketDataService: MarketDataService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   portfolioCache: Map&lt;String, Portfolio&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getStockPositions(accountId: String): Map&lt;String, StockPosition&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onStockPriceUpdateEvent(stockPriceUpdateEvent: StockPriceUpdateEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updatePortfolio(order: Order)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Stock1276494208[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Stock</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   companyName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   currentPrice: BigDecimal [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   exchange: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stockSymbol: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TradeExecutionService9687444[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TradeExecutionService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   marketDataService: MarketDataService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   strategies: Map&lt;OrderType, MatchStrategy&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ process(order: Order)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+WatchList1656029472[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)WatchList</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   accountId: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   stocks: List&lt;Stock&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addStock(stock: Stock)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeStock(stock: Stock)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+WatchListService9687444[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)WatchListService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   watchListCache: Map&lt;String, WatchList&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onStockPriceUpdateEvent(stockPriceUpdateEvent: StockPriceUpdateEvent)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+'edges    
+AccountManagementService9687444 -> Account942317033[label="accountCache
+[0..*]"];
+AccountManagementService9687444 -> MarketDataService9687444[label="marketDataService
+[0..1]"];
+App933144568 -> MarketDataService9687444[label="main() -> updateStockCache()"];
+App933144568 -> OrderManagementService9687444[label="main() -> placeOrder()"];
+App933144568 -> PortfolioManagementService9687444[label="main() -> getStockPositions()"];
+MarketDataService9687444 -> PortfolioManagementService9687444[arrowhead=none];
+MarketDataService9687444 -> Stock1276494208[label="stockCache
+[0..*]"];
+MarketDataService9687444 -> WatchListService9687444[arrowhead=none];
+OrderManagementService9687444 -> AccountManagementService9687444[label="accountManagementService
+[0..1]"];
+OrderManagementService9687444 -> MarketDataService9687444[label="marketDataService
+[0..1]"];
+OrderManagementService9687444 -> PortfolioManagementService9687444[label="portfolioManagementService
+[0..1]"];
+OrderManagementService9687444 -> TradeExecutionService9687444[label="tradeExecutionService
+[0..1]"];
+PortfolioManagementService9687444 -> MarketDataService9687444[label="marketDataService
+[0..1]"];
+PortfolioManagementService9687444 -> Portfolio1276494208[label="portfolioCache
+[0..*]"];
+TradeExecutionService9687444 -> LimitOrderMatchStrategy1277344718[arrowhead=none];
+TradeExecutionService9687444 -> MarketDataService9687444[label="marketDataService
+[0..1]"];
+TradeExecutionService9687444 -> MarketOrderMatchStrategy1277344718[arrowhead=none];
+TradeExecutionService9687444 -> OrderType1272730040[label="strategies
+[0..*]"];
+WatchListService9687444 -> WatchList1656029472[label="watchListCache
+[0..*]"];
+    
+}
+@enduml

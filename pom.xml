@@ -11,5 +11,6 @@
     <module>e-commerce</module>
     <module>stock-broker</module>
     <module>hotel-booking</module>
+    <module>job-board</module>
   </modules>
 </project>

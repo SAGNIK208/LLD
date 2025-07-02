@@ -1,0 +1,311 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": false,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "None", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 5,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.lld.atm.App",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+ATM1525052707[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ATM</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   atmInventory: ATMInventory [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   atmState: ATMState [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   currentCard: Card [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   transactionManager: TransactionManager [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ nextState(atmState: ATMState)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateCurrentCard(card: Card)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ATMInventory1964549321[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ATMInventory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ dispenseCash(amount: int): Cash</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isCashAvailable()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+App1525052707[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)App</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AuthenticateManager1964549321[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AuthenticateManager</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ authenticateCard(card: Card, pin: String): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AuthenticatingState1724409506[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AuthenticatingState</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   atm: ATM [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ authenticate(pin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelTransaction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ejectCard()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertCard(card: Card)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectTransaction(operationType: OperationType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ viewBalance(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Card558626379[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Card</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   ID: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   pin: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ExitState1724409506[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ExitState</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   atm: ATM [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ authenticate(pin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelTransaction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ejectCard()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertCard(card: Card)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectTransaction(operationType: OperationType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ viewBalance(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+IDLEState1724409506[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)IDLEState</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   atm: ATM [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ authenticate(pin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelTransaction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ejectCard()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertCard(card: Card)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectTransaction(operationType: OperationType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ viewBalance(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ReadyState1724409506[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ReadyState</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   atm: ATM [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ authenticate(pin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelTransaction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ejectCard()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertCard(card: Card)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectTransaction(operationType: OperationType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ viewBalance(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TransactionManager1964549321[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TransactionManager</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ viewBalance(card: Card): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+VerifyingBalanceState1724409506[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)VerifyingBalanceState</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   atm: ATM [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ authenticate(pin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelTransaction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ejectCard()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertCard(card: Card)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectTransaction(operationType: OperationType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ viewBalance(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+WithdrawingState1724409506[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)WithdrawingState</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   atm: ATM [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ authenticate(pin: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelTransaction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ejectCard()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertCard(card: Card)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ selectTransaction(operationType: OperationType)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ viewBalance(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+'edges    
+ATM1525052707 -> ATMInventory1964549321[label="atmInventory
+[0..1]"];
+ATM1525052707 -> Card558626379[label="currentCard
+[0..1]"];
+ATM1525052707 -> TransactionManager1964549321[label="transactionManager
+[0..1]"];
+App1525052707 -> ATM1525052707[label="main() -> nextState()"];
+App1525052707 -> AuthenticatingState1724409506[arrowhead=none];
+App1525052707 -> ExitState1724409506[arrowhead=none];
+App1525052707 -> IDLEState1724409506[arrowhead=none];
+App1525052707 -> ReadyState1724409506[arrowhead=none];
+App1525052707 -> VerifyingBalanceState1724409506[arrowhead=none];
+App1525052707 -> WithdrawingState1724409506[arrowhead=none];
+AuthenticatingState1724409506 -> ATM1525052707[label="atm
+[0..1]"];
+AuthenticatingState1724409506 -> AuthenticateManager1964549321[label="authenticate() -> authenticateCard()"];
+ExitState1724409506 -> ATM1525052707[label="atm
+[0..1]"];
+IDLEState1724409506 -> ATM1525052707[label="atm
+[0..1]"];
+ReadyState1724409506 -> ATM1525052707[label="atm
+[0..1]"];
+VerifyingBalanceState1724409506 -> ATM1525052707[label="atm
+[0..1]"];
+VerifyingBalanceState1724409506 -> TransactionManager1964549321[label="viewBalance() -> viewBalance()"];
+WithdrawingState1724409506 -> ATM1525052707[label="atm
+[0..1]"];
+    
+}
+@enduml
