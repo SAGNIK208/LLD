@@ -12,5 +12,6 @@
     <module>stock-broker</module>
     <module>hotel-booking</module>
     <module>job-board</module>
+    <module>black-jack</module>
   </modules>
 </project>
